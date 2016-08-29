@@ -39,7 +39,8 @@ Following policy should be attached to the server from which this lamda fuction 
 }
 ```
 
-This policy should be applied to the Lambda function
+
+Following policy should be applied to the newly created Lambda function.
 ```
 {
   "Version": "2012-10-17",
