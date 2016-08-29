@@ -1,18 +1,19 @@
 # ScheduleStartStopEc2Lambda
 This AWS Lambda function will help you to start and stop EC2 instances at regular intervals. Also you can invoke this function manually with proper input to start or stop specific instances.
 
+
 This script will start and stop AWS instances either by invoking lambda function from any server or based on tag values
-(1) If the function is invoked with a payload, this function will check what is the action to be performed. Sample payload:
+*(1)* If the function is invoked with a payload, this function will check what is the action to be performed. Sample payload:
+```
   {
       "action": "<stop|start>",
       "instances": "<NameTag1>[, <NameTag2>, <NameTag3>, ...]>"
   }
+```
+Based on the action (Not case sensitive), function will start or stop the instances specified in the payload.
+Start or stop function is restricted to instances having a Tag 'Start-StopHour' for more control and unintentional stop or start of instances.
 
-       Based on the action (Not case sensitive), function will start or stop the instances specified in the payload.
-       Start or stop function is restricted to instances having a Tag 'Start-StopHour' for more control and 
-           unintentional stop or start of instances.
-
- (2) If there is no payload, it will check value of tag 'Start-StopHour' and will start or stop instances based on the time specified.
+*(2)* If there is no payload, it will check value of tag 'Start-StopHour' and will start or stop instances based on the time specified.
        This option is schedule based. Time will be read in UTC.
        Expected tag value is : start:HH-stop:HH or start:HH or stop:HH
        Both fields are not mandatory. You can use any one of the action too.
