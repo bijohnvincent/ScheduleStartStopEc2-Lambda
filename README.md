@@ -18,7 +18,7 @@ Eg: for a wrapper script can be viewed at : [Wrapper written in bash using AWS C
 - Based on the action (Not case sensitive), function will start or stop the instances specified in the payload.
 - Start or stop function is restricted to instances having a Tag 'Start-StopHour' for more control and unintentional stop or start of instances.
 
-**(2)** If there is no payload, it will check value of tag 'Start-StopHour' and will start or stop instances based on the time specified.
+**(2)** If this Lambda function is triggered by AWS sheduled event, it will check value of tag 'Start-StopHour' and will start or stop instances based on the time specified.
 - This option is schedule based. Time will be read in UTC.
 - Expected tag value is : start:HH-stop:HH or start:HH or stop:HH
 - Both fields are not mandatory. You can use any one of the action too.
