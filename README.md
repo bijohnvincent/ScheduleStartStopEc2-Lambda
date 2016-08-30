@@ -5,14 +5,14 @@ This AWS Lambda function will help you to start and stop EC2 instances at regula
 This script will start and stop AWS instances either by invoking lambda function from any server or based on tag added to instances.
 
 
-**(1)** If the function is invoked with a payload, this function will check what is the action to be performed. Sample payload:
+**(1)** If the function is invoked manually with a payload, this function will check what is the action to be performed. Syntax of the  payload should be as below:
 ```
   {
       "action": "<stop|start>",
       "instances": "<NameTag1>[, <NameTag2>, <NameTag3>, ...]>"
   }
 ```
-Eg: for a wrapper script can be viewed at : [Wrapper written in bash using AWS CLI](https://github.com/bijohnvincent/cmapi_clusterstartstop/blob/master/startstopec2instances.sh) 
+Refer [AWS CLI - invoking Lambda function]( http://docs.aws.amazon.com/lambda/latest/dg/with-userapp-walkthrough-custom-events-invoke.html) to know about manual invoking of the function. You can write wrapper scripts to call this lambda function. Example for a wrapper script can be viewed at : [Wrapper written in bash using AWS CLI](https://github.com/bijohnvincent/cmapi_clusterstartstop/blob/master/startstopec2instances.sh) 
 
 
 - Based on the action (Not case sensitive), function will start or stop the instances specified in the payload.
