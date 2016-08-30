@@ -20,7 +20,7 @@ Refer [AWS CLI - invoking Lambda function]( http://docs.aws.amazon.com/lambda/la
 
 **(2)** If this Lambda function is triggered by AWS sheduled event, it will check value of tag 'Start-StopHour' and will start or stop instances based on the time specified.
 - This option is schedule based. Time will be read in UTC.
-- Tag value should like: 
+- Tag value should be like: 
 ```
 start:HH-stop:HH
  or
