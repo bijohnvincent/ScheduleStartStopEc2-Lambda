@@ -12,7 +12,7 @@ This script will start and stop AWS instances either by invoking lambda function
       "instances": "<NameTag1>[, <NameTag2>, <NameTag3>, ...]>"
   }
 ```
-Refer [AWS CLI - invoking Lambda function]( http://docs.aws.amazon.com/lambda/latest/dg/with-userapp-walkthrough-custom-events-invoke.html) to know about manual invokation of this Lambda function. You can write wrapper scripts to call this lambda function. Example for a wrapper script can be viewed at : [Wrapper written in bash using AWS CLI](https://github.com/bijohnvincent/cmapi_clusterstartstop/blob/master/startstopec2instances.sh) 
+Refer [AWS CLI - invoking Lambda function]( http://docs.aws.amazon.com/lambda/latest/dg/with-userapp-walkthrough-custom-events-invoke.html) to know about manual invocation of this Lambda function. You can write wrapper scripts to call this lambda function. Example for a wrapper script can be viewed at : [Wrapper written in bash using AWS CLI](https://github.com/bijohnvincent/cmapi_clusterstartstop/blob/master/startstopec2instances.sh) 
 
 
 - Based on the action (Not case sensitive), function will start or stop the instances specified in the payload.
@@ -20,7 +20,14 @@ Refer [AWS CLI - invoking Lambda function]( http://docs.aws.amazon.com/lambda/la
 
 **(2)** If this Lambda function is triggered by AWS sheduled event, it will check value of tag 'Start-StopHour' and will start or stop instances based on the time specified.
 - This option is schedule based. Time will be read in UTC.
-- Expected tag value is : start:HH-stop:HH or start:HH or stop:HH
+- Expected tag value is : 
+```
+start:HH-stop:HH
+ or
+start:HH
+ or
+stop:HH
+```
 - Both fields are not mandatory. You can use any one of the action too.
 - If the servers are started or stopped on invocation only, just add 'none' as value. (False, 0, None, No & N will also work)
 
