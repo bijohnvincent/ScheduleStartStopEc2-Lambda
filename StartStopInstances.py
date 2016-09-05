@@ -51,7 +51,7 @@ def StartInstances(instanceNames):
                 
                 # Ensures only instances with tag 'Start-StopHourUTC' can be started
                 if 'Start-StopHourUTC' in str(Instance['Tags']):
-                    skipStop=False
+                    skipStart=False
                     
                 # starts the instance
                 if not skipStart:
@@ -60,7 +60,11 @@ def StartInstances(instanceNames):
                         InstanceIds=[Instance['InstanceId']],
                         DryRun=False
                         )
-                    print response
+                    #print response
+                    if response['ResponseMetadata']['HTTPStatusCode'] == 200:
+                        print 'API call status: Success'
+                    else:
+                        print 'API call status: Fail'
                 
                 else:
                     print "Not permitted to start servers without 'Start-StopHourUTC' tag"
@@ -98,7 +102,11 @@ def StopInstances(instanceNames):
                         InstanceIds=[Instance['InstanceId']],
                         DryRun=False
                         )
-                    print response
+                    #print response
+                    if response['ResponseMetadata']['HTTPStatusCode'] == 200:
+                        print 'API call status: Success'
+                    else:
+                        print 'API call status: Fail'
                 
                 else:
                     print "Not permitted to stop servers without 'Start-StopHourUTC' tag."
