@@ -27,11 +27,6 @@ import datetime
 # Create Connection that can be used in all functions
 ec2 =  boto3.client('ec2')
 
-# Initialize global variables
-now = datetime.datetime.now()
-currentHour = now.hour
-
-
 #
 # This function starts the instances  passed as parameter
 # Python list with instance names is the expected value
@@ -121,8 +116,8 @@ def StopInstances(instanceNames):
 # This function will read the tag Start-StopHourUTC and will take necessary action 
 # by calling StartInstances() or StopInstances()
 #
-def CheckTagsAndTakeAction():
-
+def CheckTagsAndTakeAction(now):
+    currentHour = now.hour
     # Filter instances that has specific Tag-key
     Reservations = ec2.describe_instances(Filters=[{'Name':'tag-key','Values':['Start-StopHourUTC']}])
     
@@ -196,7 +191,9 @@ def CheckTagsAndTakeAction():
 # This is the main function 
 #
 def start_stop(json_val, context):
-    #print json_val
+    print json_val
+    now = datetime.datetime.now()
+    currentHour = now.hour
     print "current hour(UTC) : " + str(currentHour)
     
     # If not invoked by CloudWatch event, process the json input and take necessary action
@@ -227,5 +224,5 @@ def start_stop(json_val, context):
     # If invoked by CloudWatch Scheduled Event, call function for checking tag and take action according to tag
     else:
         print "CloudWatch Scheduled event"
-        CheckTagsAndTakeAction()
+        CheckTagsAndTakeAction(now)
     return
