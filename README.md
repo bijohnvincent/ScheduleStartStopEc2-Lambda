@@ -16,9 +16,9 @@ Refer [AWS CLI - invoking Lambda function]( http://docs.aws.amazon.com/lambda/la
 
 
 - Based on the action (Not case sensitive), function will start or stop the instances specified in the payload.
-- Start or stop function is restricted to instances having a Tag 'Start-StopHour' for more control and unintentional stop or start of instances.
+- Start or stop function is restricted to instances having a Tag 'Start-StopHourUTC' for more control and unintentional stop or start of instances.
 
-**(2)** If this Lambda function is triggered by AWS sheduled event, it will check value of tag 'Start-StopHour' and will start or stop instances based on the time specified.
+**(2)** If this Lambda function is triggered by AWS sheduled event, it will check value of tag 'Start-StopHourUTC' and will start or stop instances based on the time specified.
 - This option is schedule based. Time will be read in UTC.
 - Tag value should be like: 
 ```
