@@ -30,7 +30,7 @@ stop:HH
  or
 None
 ```
-- If you want the servers to be started or stopped on manual invocation only then just add 'None' as value. (False, 0, none, No & N will also work)
+- If you want the servers to be started or stopped by manual invocation, just add 'None' as value. (False, 0, none, No & N will also work)
 
 ## IAM policies
 Following policy should be attached to the server from which this lamda fuction is invoked. This policy is available as AWS managed policy 'AWSLambdaRole'. (You need not do this if you are not planning to invoke the Lambda function from a server. In that case, just create a CloudWatch rule that triggers this Lambda function every hour.)
