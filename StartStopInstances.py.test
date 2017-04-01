@@ -242,3 +242,7 @@ def start_stop(json_val, context):
         print "CloudWatch Scheduled event"
         CheckTagsAndTakeAction(now)
     return
+
+json_val= {"action": "stop", "instanceNames": "koc-bijohn-cargotec,koc-bijohn-cargotec" }
+context=None
+start_stop(json_val, context)
