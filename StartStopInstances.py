@@ -138,7 +138,7 @@ def CheckTagsAndTakeAction(now):
                     instanceName = tag['Value']
                 
                 
-                # Check if the tag is value is a negation. 
+                # Check if 'Start-StopHourUTC' tag value is negation. 
                 # If yes, skip start or stop action.
                 # Else split tag value with '-' as delimiter
                 if tag['Key'] == 'Start-StopHourUTC':
