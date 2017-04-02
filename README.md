@@ -9,7 +9,7 @@ This script will start and stop AWS instances either by invoking lambda function
 ```
   {
       "action": "<stop|start>",
-      "instances": "<NameTag1>[, <NameTag2>, <NameTag3>, ...]>"
+      "<instanceIds|privateIps|instanceNames>": "<instanceId1|privateIp1|NameTag1>[, <instanceId2|privateIp2|NameTag2>, ...]>" 
   }
 ```
 Refer [AWS CLI - invoking Lambda function]( http://docs.aws.amazon.com/lambda/latest/dg/with-userapp-walkthrough-custom-events-invoke.html) to know about manual invocation of this Lambda function. You can write wrapper scripts to call this lambda function. Example for a wrapper script can be viewed at : [Wrapper written in bash using AWS CLI](https://github.com/bijohnvincent/cmapi_clusterstartstop/blob/master/startstopec2instances.sh) 

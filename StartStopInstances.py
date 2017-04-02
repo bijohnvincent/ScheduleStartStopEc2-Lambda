@@ -31,15 +31,16 @@ ec2 =  boto3.client('ec2')
 # This function starts the instances  passed as parameter
 # Python list with instance names is the expected value
 #
-def StartInstances(instanceNames, type):
+def StartInstances(instanceInfo, type):
 
-    # Get details of the instances that has name as in input parameter
+    # Get details of the instances that has Name/instanceId/PrivateIp as in input parameter
     if type == "NameTag":
-        Reservations = ec2.describe_instances(Filters=[{'Name':'tag:Name', 'Values':instanceNames}])
-#    elif type == "InstanceId":
-	# To be added
-#    elif type == "PrivateIp":
-	# To be added
+        Reservations = ec2.describe_instances(Filters=[{'Name':'tag:Name', 'Values':instanceInfo}])
+    elif type == "InstanceId":
+        Reservations = ec2.describe_instances (InstanceIds=instanceInfo)
+    elif type == "PrivateIp":
+        Reservations = ec2.describe_instances(Filters=[{'Name':'private-ip-address', 'Values':instanceInfo}])
+
     for Instances in Reservations['Reservations']:
         for Instance in Instances['Instances']:
             skipStart=True
@@ -77,15 +78,17 @@ def StartInstances(instanceNames, type):
 # This function will stop the instances passed as parameter
 # Python list with instance names is the expected value
 #
-def StopInstances(instanceNames, type):
+def StopInstances(instanceInfo, type):
+    print instanceInfo
 
-    # Get details of the instances that has name as in input parameter
+    # Get details of the instances that has Name/instanceId/PrivateIp as in input parameter
     if type == "NameTag":
-        Reservations = ec2.describe_instances(Filters=[{'Name':'tag:Name', 'Values':instanceNames}])
-#    elif type == "InstanceId":
-#        # To be added
-#    elif type == "PrivateIp":
-#        # To be added 
+        Reservations = ec2.describe_instances(Filters=[{'Name':'tag:Name', 'Values':instanceInfo}])
+    elif type == "InstanceId":
+        Reservations = ec2.describe_instances (InstanceIds=instanceInfo)
+    elif type == "PrivateIp":
+        Reservations = ec2.describe_instances(Filters=[{'Name':'private-ip-address', 'Values':instanceInfo}])        
+ 
     for Instances in Reservations['Reservations']:
         for Instance in Instances['Instances']:
             skipStop=True
@@ -209,11 +212,11 @@ def start_stop(json_val, context):
         print "Manual invocation"
         
         # Validate the input json file print expected format if the json is in wrong format.
-        if not 'action' in json_val or not 'instanceNames' in json_val:
-            print ''' Wrong input. Expected format:
+        if not 'action' in json_val or all( anyKey not in json_val for anyKey in ['instanceIds', 'instanceNames' , 'privateIps']):            
+	    print ''' Wrong input. Expected format:
                    {
                        "action": "<stop|start>",
-                       "instanceNames": "<NameTag1>[, <NameTag2>, <NameTag3>, ...]>"
+                       "<instanceIds|privateIps|instanceNames>": "<instanceId1|privateIp1|NameTag1>[, <instanceId2|privateIp2|NameTag2>, ...]>"
                    }'''
             return None
 
@@ -226,11 +229,11 @@ def start_stop(json_val, context):
 	    type="InstanceId"
 	elif 'privateIps' in json_val:
 	     instances=map(str.strip,str(json_val['privateIps']).split(",")) 
-	     type="PrivateIps"
+	     type="PrivateIp"
         
         # Call correct function based on action 'start' or 'stop'
         if json_val['action'].lower() == 'start':
-            StartInstances(instancesi, type)
+            StartInstances(instances, type)
         elif json_val['action'].lower() == 'stop':
             StopInstances(instances, type)
         else:
@@ -242,3 +245,8 @@ def start_stop(json_val, context):
         print "CloudWatch Scheduled event"
         CheckTagsAndTakeAction(now)
     return
+
+#json_val= {"action": "stop", "instanceNames": "koc-bijohn-cargotec,koc-bijohn-cargotec" }
+json_val= {"action": "stop", "privateIps": "10.2.2.99, 172.31.53.111" }
+context=None
+start_stop(json_val, context)
