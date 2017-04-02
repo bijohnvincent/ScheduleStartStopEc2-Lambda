@@ -1,15 +1,17 @@
-# Name          : StopInstances
+# Name          : Start-StopInstances
 # Author        : Bijohn Vincent
+# Version       : 1.1
+#
 # Functionality : This script will start and stop AWS instances either by invoking lambda function from any server or based on tag values
 # (1) If the function is invoked with a payload, this function will check what is the action to be performed. Sample payload:
 #   {
 #       "action": "<stop|start>",
-#       "instanceNames": "<NameTag1>[, <NameTag2>, <NameTag3>, ...]>"
+#       "<instanceIds|privateIps|instanceNames>": "<instanceId1|privateIp1|NameTag1>[, <instanceId2|privateIp2|NameTag2>, ...]>"  
 #   }
 #
 #       Based on the action (Not case sensitive), function will start or stop the instances specified in the payload.
 #       Start or stop function is restricted to instances having a Tag 'Start-StopHourUTC' for more control and 
-#           unintentional stop or start of instances.
+#       unintentional stop or start of instances.
 #
 # (2) If there is no payload, it will check value of tag 'Start-StopHourUTC' and will start or stop instances based on the time specified.
 #       This option is schedule based. Time will be read in UTC.
@@ -246,7 +248,3 @@ def start_stop(json_val, context):
         CheckTagsAndTakeAction(now)
     return
 
-#json_val= {"action": "stop", "instanceNames": "koc-bijohn-cargotec,koc-bijohn-cargotec" }
-json_val= {"action": "stop", "privateIps": "10.2.2.99, 172.31.53.111" }
-context=None
-start_stop(json_val, context)
