@@ -1,6 +1,6 @@
 # Name          : Start-StopInstances
 # Author        : Bijohn Vincent
-# Version       : 1.1
+# Version       : 1.2
 #
 # Functionality : This script will start and stop AWS instances either by invoking lambda function from any server or based on tag values
 # (1) If the function is invoked with a payload, this function will check what is the action to be performed. Sample payload:
@@ -193,10 +193,10 @@ def CheckTagsAndTakeAction(now):
     # than 0, call curresponding function to start or stop the instances.
     if not instanceToStart == ['']:
         print "Statring : " + str(instanceToStart)
-        StartInstances(instanceToStart)
+        StartInstances(instanceToStart, "NameTag")
     if not instanceToStop == ['']:
         print "Stopping : " + str(instanceToStop)
-        StopInstances(instanceToStop)
+        StopInstances(instanceToStop, "NameTag")
     return    
     
 
